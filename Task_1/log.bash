@@ -1,3 +1,3 @@
 #!/bin/bash
 
-awk '{sum[$1]+=$10} END {for (ip in sum) printf "%s bytes for %s\n", sum[ip], ip}' access.log | sort -rn
+awk '$10 ~ /^[0-9]+$/ {sum[$1]+=$10} END {for (ip in sum) if (sum[ip] >= 0) printf "%s bytes for %s\n", sum[ip], ip}' access.log | sort -bnr > test.txt
